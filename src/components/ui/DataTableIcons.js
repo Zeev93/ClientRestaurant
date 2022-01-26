@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import {Edit, Delete, RecentActors, AccountTree} from '@material-ui/icons'
+import {Edit, Delete, RecentActors, AccountTree, Search} from '@material-ui/icons'
 
 
 export const localization = {
@@ -25,5 +25,6 @@ export const tableIcons = {
     Delete: forwardRef((props, ref) => <Delete className="text-danger" {...props} ref={ref} />),
     RecentActors: forwardRef((props, ref) => <RecentActors className="text-info" {...props} ref={ref} />),
     AccountTree: forwardRef((props, ref) => <AccountTree className="text-info" {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search className="text-info" {...props} ref={ref} />),
   };
 

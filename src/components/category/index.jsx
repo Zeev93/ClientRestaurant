@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
 import Sidebar from "../layout/Sidebar";
-import { getCategoriesAction, setEditCategoryAction, deleteCategoryAction } from "../../actions/categoryActions";
+import { getCategoriesAction, editCategoryAction, deleteCategoryAction } from "../../actions/categoryActions";
 import Table from '../ui/table'
 
 const Category = () => {
@@ -18,7 +18,7 @@ const Category = () => {
     }, [])
 
     const setEdit = (id) => {
-        dispatch ( setEditCategoryAction(id) )
+        dispatch ( editCategoryAction(id) )
         navigate(`edit/${id}`)
     }
 
@@ -29,9 +29,8 @@ const Category = () => {
 
     
     const header = [
-        {title: 'ID', field: 'id', cellStyle: { width: '10%' }}, 
-        {title: 'NAME', field: 'name', cellStyle: {width: '70%'}},
-        {title: '', field:'',  cellStyle: { width: '20%' }}
+        {title: 'ID', field: 'id', cellStyle: { 'textAlign':'center', width: '10%' }}, 
+        {title: 'NAME', field: 'name', cellStyle: { 'textAlign':'center', width: '90%'}},
     ]
 
 
@@ -47,7 +46,17 @@ const Category = () => {
                         <div className="w-full flex">
                             <Link to={'/category/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
                         </div>
-                            { categories && categories.length > 0 ? <Table header = {header} body={categories} title={'Categories'} setEdit={setEdit} deleteItem={deleteItem} /> : 
+                            { categories && categories.length > 0 ? 
+                            <Table 
+                            header = {header} 
+                            body={categories} 
+                            title={'CATEGORIES'} 
+                            setEdit={setEdit} 
+                            deleteItem={deleteItem} 
+                            show={false}
+                            edit={true}
+                            del={true}
+                            showItem={''}/> : 
                             <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }
                         
                     </div>

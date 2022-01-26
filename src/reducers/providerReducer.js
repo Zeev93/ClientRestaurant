@@ -14,6 +14,9 @@ import {
     UPDATE_PROVIDER,
     UPDATE_PROVIDER_SUCCESS,
     UPDATE_PROVIDER_ERROR,
+    GET_PROVIDER_PRODUCTS,
+    GET_PROVIDER_PRODUCTS_SUCCESS,
+    GET_PROVIDER_PRODUCTS_ERROR,
 } from '../types'
 
 const initialState = {
@@ -21,7 +24,8 @@ const initialState = {
     errors: false,
     loading: false,
     edit: false,
-    delete: null
+    delete: null,
+    products: [],
 }
 
 
@@ -32,6 +36,7 @@ export default function foo (state = initialState, action ){
         case CREATE_PROVIDER:
         case EDIT_PROVIDER:
         case UPDATE_PROVIDER:
+        case GET_PROVIDER_PRODUCTS:
             return {
                 ...state,
                 loading: action.payload, 
@@ -49,6 +54,7 @@ export default function foo (state = initialState, action ){
                 providers: [...state.providers, action.payload],
                 errors: null
             }
+        
         case EDIT_PROVIDER_SUCCESS:
             return {
                 ...state,
@@ -62,6 +68,7 @@ export default function foo (state = initialState, action ){
         case EDIT_PROVIDER_ERROR:
         case DELETE_PROVIDER_ERROR:
         case UPDATE_PROVIDER_ERROR:
+        case GET_PROVIDER_PRODUCTS_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -80,6 +87,13 @@ export default function foo (state = initialState, action ){
                 providers: action.payload,
                 error: false
             }
+        case GET_PROVIDER_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: action.payload,
+                error: false
+            }
         case UPDATE_PROVIDER_SUCCESS:
             return {
                 ...state,
@@ -92,7 +106,6 @@ export default function foo (state = initialState, action ){
                 providers: state.providers.filter( item => item.id !== state.delete ),
                 delete: null
             }
-
         
         
         default: 

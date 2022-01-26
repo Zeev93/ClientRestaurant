@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
 import Sidebar from "../layout/Sidebar";
 
-import {getProvidersAction, setEditProviderAction, deleteProviderAction} from '../../actions/providerActions'
+import {getProvidersAction, editProviderAction, deleteProviderAction} from '../../actions/providerActions'
 
 
 const ProductProvider = () => {
@@ -15,23 +15,20 @@ const ProductProvider = () => {
     const providers = useSelector(state => state.providers.providers)
 
     const header = [
-        {title: 'ID', field: 'id', cellStyle: { width: '10%' }}, 
-        {title: 'NAME', field: 'name', cellStyle: {width: '15%'}},
-        {title: 'E-MAIL', field:'email',  cellStyle: { width: '20%' }},
-        {title: 'PHONE', field:'phone',  cellStyle: { width: '15%' }},
-        {title: 'ADDRESS', field:'address',  cellStyle: { width: '30%' }},
-        {title: '', field:'',  cellStyle: { width: '10%' }}
+        {title: 'ID', field: 'id', cellStyle: { 'textAlign':'center', width: '10%' }}, 
+        {title: 'NAME', field: 'name', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'E-MAIL', field:'email',  cellStyle: { 'textAlign':'center', width: '20%' }},
+        {title: 'PHONE', field:'phone',  cellStyle: { 'textAlign':'center', width: '20%' }},
+        {title: 'ADDRESS', field:'address',  cellStyle: { 'textAlign':'center', width: '30%' }},
     ]
-
-    console.log(providers);
-
 
     useEffect(() => {
         dispatch(getProvidersAction())
+        // eslint-disable-next-line
     }, [])
 
     const setEdit = (id) => {
-        dispatch ( setEditProviderAction(id) )
+        dispatch ( editProviderAction(id) )
         navigate(`edit/${id}`)
     }
 
@@ -51,7 +48,17 @@ const ProductProvider = () => {
                         <div className="w-full flex">
                             <Link to={'/provider/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
                         </div>
-                        { providers && providers.length > 0 ? <Table header={header} body={providers} title={'Providers'} setEdit={setEdit} deleteItem={deleteItem} /> : 
+                        { providers && providers.length > 0 ? 
+                        <Table 
+                        header={header} 
+                        body={providers} 
+                        title={'PROVIDERS'} 
+                        setEdit={setEdit} 
+                        deleteItem={deleteItem}
+                        showItem={''}
+                        show={false}
+                        edit={true}
+                        del={true} /> : 
                         <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p>}
                     </div>
                 </div>

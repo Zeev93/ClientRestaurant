@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Link, useMatch, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {useDispatch, useSelector } from 'react-redux'
 import Header from "../layout/Header";
 import Sidebar from "../layout/Sidebar";
 import { showAlertAction, hideAlertAction } from '../../actions/alertActions'
-import { setEditProviderAction, editProviderAction } from "../../actions/providerActions";
+import { editProviderAction, updateProviderAction } from "../../actions/providerActions";
 import { useEffect } from "react";
 
 const EditProvider = () => {
 
-    const match = useParams()
+    const params = useParams()
 
     const alert = useSelector( state => state.alert.alert )
     const errors = useSelector ( state => state.providers.errors )
@@ -27,7 +27,7 @@ const EditProvider = () => {
 
     useEffect( () => {
         if(!editProvider){
-            dispatch(setEditProviderAction(match.id))
+            dispatch(editProviderAction(params.id))
         }
         setProvider(editProvider)
     }, [editProvider])
@@ -53,7 +53,7 @@ const EditProvider = () => {
         }
 
         dispatch(hideAlertAction())
-        dispatch(editProviderAction(provider))
+        dispatch(updateProviderAction(provider))
         
         setTimeout(() => {
             navigate('/provider')

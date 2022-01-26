@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {useDispatch, useSelector } from 'react-redux'
-import {Route, Navigate, Outlet } from 'react-router-dom'
+import {Navigate, Outlet } from 'react-router-dom'
 import { getUserInfo } from '../../actions/authActions';
 
 

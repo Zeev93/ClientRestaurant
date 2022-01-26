@@ -24,6 +24,18 @@ import EditCategory from './components/category/edit'
 import ProductProvider from './components/provider'
 import CreateProvider from './components/provider/create'
 import EditProvider from './components/provider/edit'
+//Product
+import Product from './components/product'
+import EditProduct from './components/product/edit'
+
+import Purchase from './components/purchase'
+import CreatePurchase from './components/purchase/create'
+import ShowPurchase from './components/purchase/show'
+
+
+import Sale from './components/sale'
+import CreateSale from './components/sale/create'
+import ShowSale from './components/sale/show'
 
 
 const token = localStorage.getItem('Bearer')
@@ -47,6 +59,18 @@ function App() {
                   <Route exact path='/provider' element={<ProductProvider/>}/>
                   <Route exact path='/provider/create' element={<CreateProvider/>}/>
                   <Route exact path='/provider/edit/:id' element={<EditProvider />}/>
+
+                  <Route exact path='/product' element={<Product/>}/>
+                  <Route exact path='/product/edit/:id' element={<EditProduct />}/>
+
+                  <Route exact path='/purchase' element={<Purchase/>}/>
+                  <Route exact path='/purchase/create' element={<CreatePurchase/>}/>
+                  <Route exact path='/purchase/show/:id' element={<ShowPurchase/>}/>
+
+                  <Route exact path='/sale' element={<Sale/>}/>
+                  <Route exact path='/sale/create' element={<CreateSale/>}/>
+                  <Route exact path='/sale/show/:id' element={<ShowSale/>}/>
+
                 </Route> 
                 <Route path="/" element={ <PublicRoute/> }>
                   <Route path="/login" element={ <Login/> } />

@@ -16,6 +16,9 @@ import {
     UPDATE_PROVIDER,
     UPDATE_PROVIDER_SUCCESS,
     UPDATE_PROVIDER_ERROR,
+    GET_PROVIDER_PRODUCTS,
+    GET_PROVIDER_PRODUCTS_SUCCESS,
+    GET_PROVIDER_PRODUCTS_ERROR,
 } from '../types'
 
 
@@ -48,10 +51,18 @@ const getProvidersError = payload => ({
 
 export function createNewProviderAction (provider) {
     return async dispatch => {
+        console.log(provider);
         dispatch(createNewProvider())
         await clientAxios.post('/providers', provider)
         .then( response => {
             dispatch(createNewProviderSuccess(response.data.provider))
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your provider has been saved',
+                showConfirmButton: false,
+                timer: 1500
+              })
         })
         .catch( error => {
             dispatch(createNewProviderError(error.response.data))
@@ -75,12 +86,12 @@ const createNewProviderError = payload => ({
 })
 
 
-export function editProviderAction(provider) {
+export function updateProviderAction(provider) {
     return async dispatch => {
-        dispatch(editProvider())
+        dispatch(updateProvider())
         await clientAxios.put(`/providers/${provider.id}`, provider)
         .then( response => {
-            dispatch(editProviderSuccess(response.data.provider))
+            dispatch(updateProviderSuccess(response.data.provider))
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -90,68 +101,132 @@ export function editProviderAction(provider) {
             })
         })
         .catch( error => {
-            dispatch(editProviderError(error.response.data))
+            dispatch(updateProviderError(error.response.data))
         })
     }
 }
 
-const editProvider = () => ({
+const updateProvider = () => ({
     type: UPDATE_PROVIDER
 })
 
-const editProviderSuccess = payload => ({
+const updateProviderSuccess = payload => ({
     type: UPDATE_PROVIDER_SUCCESS,
     payload
 })
 
-const editProviderError = payload => ({
+const updateProviderError = payload => ({
     type: UPDATE_PROVIDER_ERROR,
     payload
 })
 
 
-export function setEditProviderAction (id) {
+export function editProviderAction (id) {
     return async dispatch => {
-        dispatch(setEditProvider())
+        dispatch(editProvider())
         await clientAxios.get(`/providers/${id}/edit`)
         .then( response => {
-            dispatch(setEditProviderSuccess(response.data.provider))
+            dispatch(editProviderSuccess(response.data.provider))
         })
         .catch( error => {
-            dispatch(setEditProviderError(error.response.data))
+            dispatch(editProviderError(error.response.data))
         })
     }
 }
 
 
-const setEditProvider = () => ({
+const editProvider = () => ({
     type: EDIT_PROVIDER
 })
 
-const setEditProviderSuccess = payload => ({
+const editProviderSuccess = payload => ({
     type: EDIT_PROVIDER_SUCCESS,
     payload
 })
 
-const setEditProviderError = payload => ({
+const editProviderError = payload => ({
     type: EDIT_PROVIDER_ERROR,
     payload
 })
 
 
-export function deleteProviderAction (id) {
+
+export function deleteProviderAction(id){
     return async dispatch => {
-        dispatch(deleteProvider())
-        clientAxios.get(`/providers/${id}`)
+        await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteProvider(id))        
+                clientAxios.delete(`/providers/${id}`)
+                .then( response => {
+                    dispatch(deleteProviderSuccess(response.data.product))
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
+                })
+                .catch( error => {
+                    dispatch(deleteProviderError(error.response.data.message))
+                    Swal.fire(
+                        'Error!',
+                        'Your file could not be deleted.',
+                        'error'
+                      )
+                })
+              
+            }
+          })
+        
+    }
+}
+
+const deleteProvider = payload => ({
+    type: DELETE_PROVIDER,
+    payload
+})
+
+const deleteProviderSuccess = payload => ({
+    type: DELETE_PROVIDER_SUCCESS,
+    payload
+})
+
+const deleteProviderError = payload => ({
+    type: DELETE_PROVIDER_ERROR,
+    payload
+})
+
+export function getProviderProductsAction(id){
+    return async dispatch => {
+        dispatch(getProviderProducts())
+        await clientAxios.get(`providers/products/${id}`)
         .then( response => {
-            console.log(response);
+            dispatch(getProviderProductsSuccess(response.data.products))
         })
         .catch( error => {
-            console.log(error);
+            dispatch(getProviderProductsError(error.response.data))
         })
     }
 }
 
-const deleteProvider = () => ({
-    type: DELETE_PROVIDER
+const getProviderProducts = () => ({
+    type: GET_PROVIDER_PRODUCTS,
+    payload: true
+})
+
+const getProviderProductsSuccess = payload => ({
+    type: GET_PROVIDER_PRODUCTS_SUCCESS,
+    payload
+})
+
+const getProviderProductsError = payload => ({
+    type: GET_PROVIDER_PRODUCTS_ERROR,
+    payload
 })

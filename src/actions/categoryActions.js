@@ -2,9 +2,6 @@ import {
     CREATE_CATEGORY,
     CREATE_CATEGORY_SUCCESS,
     CREATE_CATEGORY_ERROR,
-    VIEW_CATEGORY,
-    VIEW_CATEGORY_SUCCESS,
-    VIEW_CATEGORY_ERROR,
     VIEW_CATEGORIES,
     VIEW_CATEGORIES_SUCCESS,
     VIEW_CATEGORIES_ERROR,
@@ -95,31 +92,31 @@ const getCategoriesError = payload => ({
 
 // Get EDIT
 
-export function setEditCategoryAction(id) {
+export function editCategoryAction(id) {
     return async (dispatch) => {
-        dispatch(setEditCategory())
+        dispatch(editCategory())
         await clientAxios.get(`/categories/${id}/edit`)
         .then(response =>{
-            dispatch(setEditCategorySuccess(response.data.category))
+            dispatch(editCategorySuccess(response.data.category))
         })
         .catch( error => {
-            setEditCategoryError(error.response.data)
+            editCategoryError(error.response.data)
         })
     }
 }
 
 
-const setEditCategory = () => ({
+const editCategory = () => ({
     type: EDIT_CATEGORY,
     payload: true
 })
 
-const setEditCategorySuccess = payload => ({
+const editCategorySuccess = payload => ({
     type: EDIT_CATEGORY_SUCCESS,
     payload
 })
 
-const setEditCategoryError = payload => ({
+const editCategoryError = payload => ({
     type: EDIT_CATEGORY_ERROR,
     payload: payload
 })
@@ -127,12 +124,12 @@ const setEditCategoryError = payload => ({
 
 // Update Category
 
-export function editCategoryAction(category){
+export function updateCategoryAction(category){
     return async dispatch => {
-        dispatch(editCategory())
+        dispatch(updateCategory())
         await clientAxios.put(`/categories/${category.id}`, category)
         .then( response => {
-            dispatch(editCategorySuccess(response.data.category))
+            dispatch(updateCategorySuccess(response.data.category))
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -142,22 +139,22 @@ export function editCategoryAction(category){
             })
         })
         .catch( error => {
-            dispatch(editCategoryError(error.response.data))
+            dispatch(updateCategoryError(error.response.data))
         })
     }
 }
 
-const editCategory = () => ({
+const updateCategory = () => ({
     type: UPDATE_CATEGORY,
     payload: true
 })
 
-const editCategorySuccess = payload => ({
+const updateCategorySuccess = payload => ({
     type: UPDATE_CATEGORY_SUCCESS,
     payload
 })
 
-const editCategoryError = payload => ({
+const updateCategoryError = payload => ({
     type: UPDATE_CATEGORY_ERROR,
     payload
 })
@@ -179,15 +176,20 @@ export function deleteCategoryAction(id){
                 clientAxios.delete(`/categories/${id}`)
                 .then( response => {
                     dispatch(deleteCategorySuccess(response.data.category))
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
                 })
                 .catch( error => {
                     dispatch(deleteCategoryError(error.response.data.message))
+                    Swal.fire(
+                        'Error!',
+                        'Your file could not be deleted.',
+                        'error'
+                      )
                 })
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
             }
           })
         

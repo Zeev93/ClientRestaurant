@@ -1,0 +1,80 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../layout/Header";
+import Sidebar from "../layout/Sidebar";
+import { getPurchasesAction, editPurchaseAction, deletePurchaseAction, showPurchaseAction } from "../../actions/purchaseActions";
+import Table from '../ui/table'
+
+const Purchase = () => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const purchases = useSelector( state => state.purchases.purchases )
+    
+    useEffect(() => {
+        dispatch(getPurchasesAction())    
+    }, [])
+
+    const setEdit = (id) => {
+        dispatch ( editPurchaseAction(id) )
+        navigate(`edit/${id}`)
+    }
+
+    const deleteItem = ( id ) => {
+        dispatch (deletePurchaseAction(id))
+    }
+
+    const showItem = (id)=>{
+        dispatch(showPurchaseAction(id))
+        navigate(`show/${id}`)
+    }
+   
+
+    
+    const header = [
+        {title: 'ID', field: 'id', cellStyle: { 'textAlign':'center', width: '20%' }, render: rowData => <p> #{ rowData.id } </p>}, 
+        {title: 'REALIZED', field: 'realized', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'DESCRIPTION', field: 'description', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'TOTAL', field: 'total', cellStyle: { 'textAlign':'center', width: '20%'}, render: rowData => <p> $ {rowData.total}</p>},
+        {title: 'ITEMS', field: 'count', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'PAYMENT', field: 'payment', cellStyle: { 'textAlign':'center', width: '20%'}},
+    ]
+
+
+    return ( 
+        <>
+        <div className='flex'>
+            <Sidebar/>
+            <div className="w-11/12 bg-gray-200">
+                <Header/>
+
+                <div className="content">
+                    <div className="m-10 bg-white shadow border rounded-lg p-5">
+                        <div className="w-full flex">
+                            <Link to={'/purchase/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
+                        </div>
+                            { purchases && purchases.length > 0 ? 
+                            <Table 
+                            header = {header} 
+                            body={purchases} 
+                            title={'Purchases'} 
+                            setEdit={setEdit} 
+                            deleteItem={deleteItem} 
+                            showItem={showItem}
+                            show={true}
+                            edit={false}
+                            del={true}
+                            /> : 
+                            <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        </>
+    );
+}
+ 
+export default Purchase;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { loginAction } from '../../actions/authActions';
 import { showAlertAction, hideAlertAction } from '../../actions/alertActions'
 
@@ -11,8 +11,6 @@ const Login = () => {
         email: '',
         password: ''
     })
-
-    const navigate = useNavigate();
 
     const alert = useSelector( state => state.alert.alert )
 
@@ -39,9 +37,6 @@ const Login = () => {
         }
         dispatch(hideAlertAction())
         submitLogin(login)
-        // setTimeout( () => {
-        //     navigate('/')
-        // }, 2000)
     }
 
     const submitLogin = login => dispatch(loginAction(login))

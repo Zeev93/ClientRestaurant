@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Link, useMatch, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {useDispatch, useSelector } from 'react-redux'
 import Header from "../layout/Header";
 import Sidebar from "../layout/Sidebar";
 import { showAlertAction, hideAlertAction } from '../../actions/alertActions'
-import { setEditCategoryAction, editCategoryAction } from "../../actions/categoryActions";
+import { editCategoryAction, updateCategoryAction } from "../../actions/categoryActions";
 import { useEffect } from "react";
 
 const EditCategory = () => {
 
-    const match = useParams()
+    const params = useParams()
 
     const alert = useSelector( state => state.alert.alert )
     const errors = useSelector ( state => state.categories.errors )
@@ -26,7 +26,7 @@ const EditCategory = () => {
 
     useEffect( () => {
         if(!editCategory){
-            dispatch(setEditCategoryAction(match.id))
+            dispatch(editCategoryAction(params.id))
         }
         setCategory(editCategory)
     }, [editCategory])
@@ -52,7 +52,7 @@ const EditCategory = () => {
         }
 
         dispatch(hideAlertAction())
-        dispatch(editCategoryAction(category))
+        dispatch(updateCategoryAction(category))
         
         setTimeout(() => {
             navigate('/category')
