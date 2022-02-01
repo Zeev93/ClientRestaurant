@@ -2,26 +2,26 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector } from 'react-redux'
 import { showAlertAction, hideAlertAction } from '../../actions/alertActions'
-import { createNewPurchaseAction, addItemCartAction, deleteItemCartAction, cancelCartAction } from '../../actions/purchaseActions'
+import { createNewSaleAction, addItemCartAction, deleteItemCartAction, cancelCartAction } from '../../actions/saleActions'
 
 import {getProvidersAction, getProviderProductsAction } from '../../actions/providerActions'
 import Swal from "sweetalert2";
 
 
-const CreatePurchase = () => {
+const CreateSale = () => {
 
     const alert = useSelector( state => state.alert.alert )
-    const errors = useSelector( state => state.purchases.errors )
+    const errors = useSelector( state => state.sales.errors )
     const providers = useSelector(state => state.providers.providers)
     const products = useSelector(state => state.providers.products)
 
-    const cartItems = useSelector( state => state.purchases.cart)
+    const cartItems = useSelector( state => state.sales.cart)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     // Initialize
-    const [purchase, setPurchase] = useState({
+    const [sale, setSale] = useState({
         description: '',
         payment: '',
         provider: ''
@@ -38,7 +38,7 @@ const CreatePurchase = () => {
     }, [])
 
     // Destructuring
-    const { description, payment, provider } = purchase; 
+    const { description, payment, provider } = sale; 
 
 
     const handleAdd = (e, param) => {
@@ -78,16 +78,16 @@ const CreatePurchase = () => {
     }
 
     const handleChangeProvider = (id) => {
-        setPurchase({
-            ...purchase,
+        setSale({
+            ...sale,
             provider: id
         })
         dispatch(getProviderProductsAction(id))
     }
 
     const handleChange = e => {
-        setPurchase({
-            ...purchase,
+        setSale({
+            ...sale,
             [e.target.name] : e.target.value
         })
     }
@@ -103,9 +103,9 @@ const CreatePurchase = () => {
             return
         }
         hideAlertAction()    
-        dispatch(createNewPurchaseAction(purchase, cartItems))
+        dispatch(createNewSaleAction(sale, cartItems))
     
-        setPurchase({
+        setSale({
             description: "",
             payment: "",
             provider: ""
@@ -114,7 +114,7 @@ const CreatePurchase = () => {
         dispatch(cancelCartAction())
 
         setTimeout(() => {
-            navigate('/purchase')
+            navigate('/admin/sale')
         }, 1000);
         
         
@@ -136,12 +136,12 @@ const CreatePurchase = () => {
               }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(cancelCartAction())
-                    navigate('/purchase')
+                    navigate('/sale')
                 }
               })
         }
         else{
-            navigate('/admin/purchase')  
+            navigate('/sale')  
         }
        
     }
@@ -149,11 +149,12 @@ const CreatePurchase = () => {
 
     return ( 
         <>
-            <form action="" onSubmit={handleSubmit}>
-                <h1 className="text-gray-700 text-2xl uppercase text-center py-2 font-bold">Create a new purchase</h1>
+    
+            <form action="" className="" onSubmit={handleSubmit}>
+                <h1 className="text-gray-700 text-2xl uppercase text-center py-2 font-bold">Create a new sale</h1>
                 <div className="grid grid-cols-2 gap-5">
                     <div className="py-5">
-                        <label htmlFor="description" className="text-gray-700 font-bold uppercase"> Purchase Description: </label>
+                        <label htmlFor="description" className="text-gray-700 font-bold uppercase"> Sale Description: </label>
                         <input type="text" name="description" id="description" className="rounded block py-2 border shadow w-full px-3" onChange={handleChange} value={description}/>
                     </div>
                     <div className="py-5">
@@ -253,13 +254,13 @@ const CreatePurchase = () => {
                     
 
                 <div className="py-10 grid grid-cols-2 gap-2">
-                    <button type="submit" className="font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700"> Purchase </button>
+                    <button type="submit" className="font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700"> Sale </button>
                     <button type="button" onClick={ (e) => {cancelOrder(e)} } className="font-bold bg-gray-300 rounded p-3 text-gray-700 uppercase hover:bg-gray-700 hover:text-white text-center">Cancel</button>
                 </div>
             </form>
-                   
+                    
         </>
     );
 }
  
-export default CreatePurchase;
+export default CreateSale;

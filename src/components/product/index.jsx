@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../layout/Header";
-import Sidebar from "../layout/Sidebar";
 import { getProductsAction, editProductAction, deleteProductAction } from "../../actions/productActions";
 import Table from '../ui/table'
 
@@ -43,30 +41,18 @@ const Product = () => {
 
     return ( 
         <>
-        <div className='flex'>
-            <Sidebar/>
-            <div className="w-11/12 bg-gray-200">
-                <Header/>
-
-                <div className="content">
-                    <div className="m-10 bg-white shadow border rounded-lg p-5">
-                            { products && products.length > 0 ? 
-                            <Table 
-                                header = {header} 
-                                body={products} 
-                                title={'PRODUCTS'} 
-                                setEdit={setEdit} 
-                                deleteItem={deleteItem} 
-                                show={false}
-                                edit={false}
-                                del={true}
-                                showItem={''} /> : 
-                            <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+            { products && products.length > 0 ? 
+            <Table 
+                header = {header} 
+                body={products} 
+                title={'PRODUCTS'} 
+                setEdit={setEdit} 
+                deleteItem={deleteItem} 
+                show={false}
+                edit={false}
+                del={true}
+                showItem={''} /> : 
+            <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }  
         </>
     );
 }

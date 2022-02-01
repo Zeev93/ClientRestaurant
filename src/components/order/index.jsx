@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../layout/Header";
-import Sidebar from "../layout/Sidebar";
 import { getSalesAction, editSaleAction, deleteSaleAction, showSaleAction } from "../../actions/saleActions";
 import Table from '../ui/table'
 
@@ -45,34 +43,22 @@ const Sale = () => {
 
     return ( 
         <>
-        <div className='flex'>
-            <Sidebar/>
-            <div className="w-11/12 bg-gray-200">
-                <Header/>
-
-                <div className="content">
-                    <div className="m-10 bg-white shadow border rounded-lg p-5">
-                        <div className="w-full flex">
-                            <Link to={'/sale/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
-                        </div>
-                            { sales && sales.length > 0 ? 
-                            <Table 
-                            header = {header} 
-                            body={sales} 
-                            title={'Sales'} 
-                            setEdit={setEdit} 
-                            deleteItem={deleteItem} 
-                            showItem={showItem}
-                            show={true}
-                            edit={false}
-                            del={true}
-                            /> : 
-                            <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }
-                        
-                    </div>
-                </div>
-            </div>
+        <div className="w-full flex">
+            <Link to={'/sale/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
         </div>
+            { sales && sales.length > 0 ? 
+            <Table 
+            header = {header} 
+            body={sales} 
+            title={'Sales'} 
+            setEdit={setEdit} 
+            deleteItem={deleteItem} 
+            showItem={showItem}
+            show={true}
+            edit={false}
+            del={true}
+            /> : 
+            <p className="text-2xl text-red-500 font-bold text-center uppercase"> No records found </p> }  
         </>
     );
 }

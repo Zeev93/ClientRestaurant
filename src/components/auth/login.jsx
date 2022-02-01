@@ -43,31 +43,24 @@ const Login = () => {
 
     return ( 
         <>
-
-        <div className='min-h-screen w-full flex bg-gray-200'>
-            <div className='w-3/12 m-auto shadow-lg rounded p-10 bg-white'>
-                <h1 className='text-gray-700 text-2xl uppercase text-center py-2 font-bold'>Login</h1>
-                <form action="" onSubmit={handleSubmit}>
-                    {alert ? <p className={alert.classes} role="alert"> {alert.msg} </p> : null}
-                    <div className='py-2'>
-                        <label htmlFor="email" className='text-gray-700 font-bold uppercase'>E-mail</label>
-                        <input type="text" id="email" name='email' className='rounded block py-2 border shadow w-full px-3' onChange={handleChange}/>
-                    </div>
-                    <div className='py-2'>
-                        <label htmlFor="password" className='text-gray-700 font-bold uppercase'>password</label>
-                        <input type="password" id="password" name='password' className='rounded block py-2 border shadow w-full px-3' onChange={handleChange}/>
-                    </div>
-                    <div className="py-5 grid grid-cols-2 gap-2">
-                        <button type='submit' className=' font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700'>
-                            Log In
-                        </button>
-                        <Link to={'/register'} className='text-gray-700 m-auto uppercase hover:underline hover:text-gray-500'>Not Registered?</Link>
-                    </div>
-                </form>
+        <h1 className='text-gray-700 text-2xl uppercase text-center py-2 font-bold'>Login</h1>
+        <form action="" onSubmit={handleSubmit}>
+            {alert ? <p className={alert.classes} role="alert"> {alert.msg} </p> : null}
+            <div className='py-2'>
+                <label htmlFor="email" className='text-gray-700 font-bold uppercase'>E-mail</label>
+                <input type="text" id="email" name='email' className='rounded block py-2 border shadow w-full px-3' onChange={handleChange}/>
             </div>
-        </div>
-            
-
+            <div className='py-2'>
+                <label htmlFor="password" className='text-gray-700 font-bold uppercase'>password</label>
+                <input type="password" id="password" name='password' className='rounded block py-2 border shadow w-full px-3' onChange={handleChange}/>
+            </div>
+            <div className="py-5 grid grid-cols-2 gap-2">
+                <button type='submit' className=' font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700'>
+                    Log In
+                </button>
+                <Link to={'/register'} className='text-gray-700 m-auto uppercase hover:underline hover:text-gray-500'>Not Registered?</Link>
+            </div>
+        </form>
         </>
      );
 }
