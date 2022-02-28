@@ -50,7 +50,7 @@ const Purchase = () => {
             <Table 
             header = {header} 
             body={purchases} 
-            title={'Purchases'} 
+            title={'PURCHASES'} 
             setEdit={setEdit} 
             deleteItem={deleteItem} 
             showItem={showItem}

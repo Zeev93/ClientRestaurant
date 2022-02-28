@@ -120,7 +120,8 @@ const EditProduct = () => {
                 </div>
                 <div className="py-5 grid grid-cols-2 gap-2">
                     <button type="submit" className="font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700"> Modify </button>
-                    <Link to={'/admin/product'} className="font-bold bg-gray-300 rounded p-3 text-gray-700 uppercase hover:bg-gray-700 hover:text-white text-center">Cancel</Link>
+                    {/* <Link to={'/admin/product'} className="font-bold bg-gray-300 rounded p-3 text-gray-700 uppercase hover:bg-gray-700 hover:text-white text-center">Cancel</Link> */}
+                    <button onClick={ () => { navigate(-1) } } className="font-bold bg-gray-300 rounded p-3 text-gray-700 uppercase hover:bg-gray-700 hover:text-white text-center">Cancel</button>
                 </div>
             </form>
                     

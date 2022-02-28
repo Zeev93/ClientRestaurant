@@ -6,7 +6,7 @@ import { createNewPurchaseAction, addItemCartAction, deleteItemCartAction, cance
 
 import {getProvidersAction, getProviderProductsAction } from '../../actions/providerActions'
 import Swal from "sweetalert2";
-
+import {price_with_tax, TAXES}  from '../../config/globals'
 
 const CreatePurchase = () => {
 
@@ -24,7 +24,8 @@ const CreatePurchase = () => {
     const [purchase, setPurchase] = useState({
         description: '',
         payment: '',
-        provider: ''
+        provider: '',
+        tax: TAXES
     })
 
     const [alertCart, setAlertCart] = useState({
@@ -108,13 +109,14 @@ const CreatePurchase = () => {
         setPurchase({
             description: "",
             payment: "",
-            provider: ""
+            provider: "",
+            tax: TAXES
         })
 
         dispatch(cancelCartAction())
 
         setTimeout(() => {
-            navigate('/purchase')
+            navigate('/admin/purchase')
         }, 1000);
         
         
@@ -136,12 +138,12 @@ const CreatePurchase = () => {
               }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(cancelCartAction())
-                    navigate('/purchase')
+                    navigate(-1)
                 }
               })
         }
         else{
-            navigate('/admin/purchase')  
+            navigate(-1)  
         }
        
     }
@@ -230,19 +232,21 @@ const CreatePurchase = () => {
 
                 <h2 className="text-gray-700 text-xl uppercase text-center py-2 font-bold"> Shopping List </h2>
 
-                <div className="grid grid-cols-4 gap-3 text-center py-3 uppercase text-gray-700 font-bold">
+                <div className="grid grid-cols-5 gap-3 text-center py-3 uppercase text-gray-700 font-bold">
                     <p>Name</p>
                     <p>Amount</p>
-                    <p>Total($)</p>
+                    <p>Subtotal</p>
+                    <p>Total (With Tax)</p>
                     <p> </p>
                 </div>
                     { cartItems && cartItems.length > 0 ? 
                     
                     cartItems.map( (item, i)  => (
-                            <div key={i} className="grid grid-cols-4 gap-3 text-center text-gray-600 py-2">
+                            <div key={i} className="grid grid-cols-5 gap-3 text-center text-gray-600 py-2">
                                 <p>{item.name}</p>
                                 <p>{item.amount}</p>
                                 <p>{item.cost * item.amount}</p>
+                                <p>{ price_with_tax((item.cost * item.amount))} </p>
                                 <button onClick={ (e) => {handleDelete(e, item.id)} } className="font-bold block w-24 m-auto bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700"> Cancel </button>
                             </div>
 

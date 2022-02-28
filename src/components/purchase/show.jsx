@@ -8,6 +8,7 @@ const ShowPurchase = () => {
 
     const params = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const purchase = useSelector( state => state.purchases.showPurchase )
     const products = useSelector( state => state.purchases.showProducts )
   
@@ -24,7 +25,7 @@ const ShowPurchase = () => {
     return ( 
         <>
         
-        <Link to={'/admin/purchase'} className="font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700 text-center">Back</Link>
+        <button type="button" onClick={ () => { navigate(-1) } } className="font-bold bg-gray-700 rounded p-3 text-white uppercase hover:bg-gray-300 hover:text-gray-700 text-center">Back</button>
             {purchase ? 
                 <div className="grid grid-cols-3 gap-3 py-10 mx-10">
                     <p className="text-gray-700"><span className="font-bold uppercase">Description:</span> { purchase.description} </p>

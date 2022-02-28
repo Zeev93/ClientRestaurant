@@ -40,11 +40,13 @@ export function getUserInfo() {
         const token = localStorage.getItem('Bearer')
         if( token ){
             tokenAuth(token)
+        }else{
+            return null
         }
         await clientAxios.get('user')
         .then( response => {
             dispatch({
-                type:GET_USER,
+                type: GET_USER,
                 payload: response.data
             })
         }).catch ( error => {

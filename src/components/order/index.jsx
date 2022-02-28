@@ -1,31 +1,33 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getSalesAction, editSaleAction, deleteSaleAction, showSaleAction } from "../../actions/saleActions";
+import { getOrdersAction, editOrderAction, deleteOrderAction, showOrderAction } from "../../actions/orderActions";
 import Table from '../ui/table'
 
-const Sale = () => {
+const Order = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const sales = useSelector( state => state.sales.sales )
+    const orders = useSelector( state => state.orders.orders )
+
+    console.log(orders);
     
     useEffect(() => {
-        dispatch(getSalesAction())    
+        dispatch(getOrdersAction())    
     }, [])
 
     const setEdit = (id) => {
-        dispatch ( editSaleAction(id) )
+        dispatch ( editOrderAction(id) )
         navigate(`edit/${id}`)
     }
 
     const deleteItem = ( id ) => {
-        dispatch (deleteSaleAction(id))
+        dispatch (deleteOrderAction(id))
     }
 
     const showItem = (id)=>{
-        dispatch(showSaleAction(id))
+        dispatch(showOrderAction(id))
         navigate(`show/${id}`)
     }
    
@@ -33,24 +35,26 @@ const Sale = () => {
     
     const header = [
         {title: 'ID', field: 'id', cellStyle: { 'textAlign':'center', width: '20%' }, render: rowData => <p> #{ rowData.id } </p>}, 
-        {title: 'REALIZED', field: 'realized', cellStyle: { 'textAlign':'center', width: '20%'}},
-        {title: 'DESCRIPTION', field: 'description', cellStyle: { 'textAlign':'center', width: '20%'}},
-        {title: 'TOTAL', field: 'total', cellStyle: { 'textAlign':'center', width: '20%'}, render: rowData => <p> $ {rowData.total}</p>},
-        {title: 'ITEMS', field: 'count', cellStyle: { 'textAlign':'center', width: '20%'}},
-        {title: 'PAYMENT', field: 'payment', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'SHIPPING NAME', field: 'shipping_name', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'SHIPPING STATE', field: 'shipping_state', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'SHIPPING CITY', field: 'shipping_city', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'SHIPPING ZIP', field: 'shipping_zip', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'TRACKING_NUMBER', field: 'tracking_number', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'PAYMENT', field: 'payment_method_id', cellStyle: { 'textAlign':'center', width: '20%'}},
+        {title: 'TOTAL', field: 'total_cost', cellStyle: { 'textAlign':'center', width: '20%'}, render: rowData => <p> $ {rowData.total_cost}</p>},
     ]
 
 
     return ( 
         <>
         <div className="w-full flex">
-            <Link to={'/sale/create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
+            <Link to={'create'} className="ml-auto p-2 rounded m-2 bg-gray-700 uppercase text-white font-bold">Create</Link>
         </div>
-            { sales && sales.length > 0 ? 
+            { orders && orders.length > 0 ? 
             <Table 
             header = {header} 
-            body={sales} 
-            title={'Sales'} 
+            body={orders} 
+            title={'Orders'} 
             setEdit={setEdit} 
             deleteItem={deleteItem} 
             showItem={showItem}
@@ -63,4 +67,4 @@ const Sale = () => {
     );
 }
  
-export default Sale;
+export default Order;

@@ -6,7 +6,7 @@ import categoryReducer from './categoryReducer'
 import providerReducer from './providerReducer'
 import productReducer from './productReducer'
 import purchaseReducer from './purchaseReducer'
-import saleReducer from './saleReducer'
+import orderReducer from './orderReducer'
 
 
 export default combineReducers({
@@ -16,5 +16,5 @@ export default combineReducers({
     providers:providerReducer,
     products:productReducer,
     purchases:purchaseReducer,
-    sales: saleReducer
+    orders: orderReducer
 })
